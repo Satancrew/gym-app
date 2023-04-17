@@ -20,7 +20,10 @@ const Home = ({ setSelectedPage }: Props) => {
   return (
     <section id="home" className="bg-gray-20 md:h-full md:pb-0 gap-16 py-10">
       {/* image and main header */}
-      <div className="md:flex md:h-5/6 items-center justify-center w-5/6 mx-auto">
+      <motion.div
+        className="md:flex md:h-5/6 items-center justify-center w-5/6 mx-auto"
+        onViewportEnter={() => setSelectedPage(SelectedPage.Home)}
+      >
         {/* main header */}
         <div className="md:basis-3/5 z-10 mt-32">
           {/* heading */}
@@ -47,7 +50,17 @@ const Home = ({ setSelectedPage }: Props) => {
             </p>
           </motion.div>
           {/* Actions */}
-          <div className="md:justify-start flex items-center gap-8 mt-8">
+          <motion.div
+            className="flex items-center gap-8 mt-8"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            variants={{
+              hidden: { opacity: 0, x: -50 },
+              visible: { opacity: 1, x: 0 },
+            }}
+          >
             <ActionButton setSelectedPage={setSelectedPage}>
               Join Now
             </ActionButton>
@@ -58,13 +71,13 @@ const Home = ({ setSelectedPage }: Props) => {
             >
               <p>Learn More</p>
             </AnchorLink>
-          </div>
+          </motion.div>
         </div>
         {/* image */}
         <div className="basic-3/5 md:z-10 md:ml-40 md:mt-16 md:justify-items-end flex justify-center">
           <img alt="home-pageGraphic" src={HomePageGraphic} />
         </div>
-      </div>
+      </motion.div>
       {/* Sponsors */}
       {isAboveMediumScreens && (
         <div className="h-[150px] w-full bg-primary-100 py-10">
